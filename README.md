@@ -1,6 +1,6 @@
 # tutorial-cli-ansible
 
-•Use Terraform or Ansible or CloudFormation to automate the following tasks against any cloud provider platform, e.g. AWS, GCP, Aliyun.
+•Use Ansible to automate the following tasks against any cloud provider platform, e.g. AWS, GCP, Aliyun.
 
 •Provision a new VPC and any networking related configurations.
 
