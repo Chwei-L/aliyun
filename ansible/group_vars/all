@@ -1,0 +1,46 @@
+# common parameters
+alicloud_region: "cn-guangzhou"
+alicloud_zone: "cn-guangzhou-i"
+
+# create vpc parameters
+vpc_cidr: "172.16.0.0/12"
+vpc_name: "Cloudshell_Tutorial_Cli_Ansible"
+vpc_description: "Create a new VPC resource via Ansible example."
+
+# create vswitch parameters
+vswitch_cidr: "172.16.1.0/24"
+vswitch_name: "Cloudshell_Tutorial_Cli_Ansible"
+vswitch_description: "Create a new VSwitch resource via Ansible example."
+
+# create security parameters
+group_name: "Cloudshell_Tutorial_Cli_Ansible"
+group_description: "Create a new security group resource via Ansible example."
+group_inboundRules:
+  - ip_protocol: tcp
+    port_range: 22/22
+    source_cidr_ip: 0.0.0.0/0
+    priority: 1
+
+  - ip_protocol: tcp
+    port_range: 80/80
+    source_cidr_ip: 0.0.0.0/0
+    priority: 1
+
+# create ECS instance parameters
+image_id: "centos_7_06_64_20G_alibase_20190711.vhd"
+instance_type: "ecs.t5-lc2m1.nano"
+instance_name: "aliyun-ansible"
+instance_description: "Create a new ECS instance resource via Ansible example."
+host_name: "my-instance-from-ansible"
+password: "Test12345"
+
+allocate_public_ip: True
+internet_charge_type: "PayByTraffic"
+max_bandwidth_in: 200
+max_bandwidth_out: 50
+instance_tags: {created_from: cloudshell-tutorial-cli-ansible}
+
+system_disk_category: "cloud_ssd"
+system_disk_size: 20
+
+number_of_instances: 1

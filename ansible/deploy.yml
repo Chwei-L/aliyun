@@ -1,0 +1,18 @@
+- name: Deploy
+  hosts: tag_created_from_cloudshell_tutorial_cli_ansible
+  remote_user: root
+
+  tasks:
+    - name: install docker-ce
+      yum: name=docker-ce state=present
+    - name: start dockerd
+      service: name=docker-ce state=started
+  task:
+    - name: running nginx with docker
+      shell: docker run -itd --name nginx --net=host nginx:latest
+
+  handlers:
+    - name: restart dockerd
+      service: name=dockerd state=restarted
+    - name: check nginx container health
+      shell: killall -0 nginx && lsof -i:80
