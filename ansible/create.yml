@@ -7,5 +7,3 @@
     - vswitch
     - security_group
     - ecs
-    - docker 
-    - nginx 
