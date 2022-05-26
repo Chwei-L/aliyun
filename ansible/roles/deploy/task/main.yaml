@@ -1,0 +1,24 @@
+- name: Deploy
+  hosts: tag_created_from_cloudshell_tutorial_cli_ansible
+  remote_user: root
+
+  tasks:
+
+  - name: remove old docker
+    yum:
+      name: docker,docker-common,docker-selinux,docker-engine
+      state: removed
+  - name: download docker repo
+    shell: yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+  - name: Install docker by yum 
+    yum:
+      name: docker-ce
+      state: present
+  - name: startup docker
+    service:
+      name: docker
+      state: started
+      enabled: yes
+  task:
+    - name: running nginx with docker
+      shell: docker run -itd --name nginx --net=host nginx:latest

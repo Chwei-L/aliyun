@@ -1,0 +1,239 @@
+---
+  - name: Set 8 for minimum password length
+    shell: authconfig --passminlen=8 --update
+
+  - name: Set 4 for maximum number of allowed consecutive characters of the same class  
+    shell: authconfig --passmaxclassrepeat=4 --update
+
+  - name: The parameter is set in a config below  
+    shell: authconfig --enablereqlower --update
+
+  - name: the parameter is set in a config below  
+    shell: authconfig --enablerequpper --update
+
+  - name: the parameter is set in a config below  
+    shell: authconfig --enablereqdigit --update
+
+  - name: the parameter is set in a config below  
+    shell: authconfig --enablereqother --update
+
+  - name: Setting the password rules              
+    lineinfile: dest=/etc/security/pwquality.conf line={{ item }}
+    with_items:
+      - 'maxsequence = 4'           
+      - 'difok = 6'                 
+
+  - name: Setting the password duplication strategy   
+      regexp: '^password    sufficient    pam_unix.so sha512 shadow nullok try_first_pass use_authtok'
+      line: 'password    sufficient    pam_unix.so sha512 shadow nullok try_first_pass use_authtok remember=1'  
+
+  - name: Setting the login policy  
+    lineinfile:
+      dest: /etc/pam.d/sshd
+      regexp: '
+      line: 'auth required pam_tally2.so deny=6 unlock_time=600 even_deny_root root_unlock_time=60'  
+      insertafter: '
+      backrefs: yes
+
+  - name: Setting up a common user Su  
+    lineinfile:
+      dest: /etc/pam.d/su
+      regexp: '^
+      line: 'auth            required        pam_wheel.so use_uid'
+
+  - name: Set wheel group users free of sudo  
+    lineinfile:
+      dest: /etc/sudoers
+      state: present
+      regexp: '^%wheel'
+      line: '%wheel  ALL=(ALL)       NOPASSWD: ALL'
+
+  - name: Add the user 'sauser' with a specific uid and a primary group of 'wheel'   
+    user:
+      name: sauser
+      password: '$6$cYbg7R6j$Q4uARdTl8m9MCx5RtR64xb7yPgZDGqtTsuwU8vYsAY/XloFwnLr8ezTf5eYCmzwm7Tv32PgbtDcFh0KHMZzmh1'
+      uid: 2048
+      groups: wheel
+      shell: /bin/bash
+      createhome: yes
+      home: /home/sauser
+      state: present
+
+  - name: Add the user 'devuser' with a specific uid and a primary group of 'wheel'   
+    user:
+      name: devuser
+      password: '$6$3JULDzh/$KrVsYViaT3b1l4btL6VdnJdTlcHqP5Bn2Wd.qtZW90q3pQFzpMvJHQbACA7r9Z7S9.ZagRXZVRupbBchcYGFW.'
+      uid: 2047
+      groups: wheel
+      shell: /bin/bash
+      createhome: yes
+      home: /home/devuser
+      state: present
+
+  - name: Setting devuser user sudo permissions    
+    lineinfile:
+      dest: /etc/sudoers
+      line: 'devuser  ALL=(ALL)        NOPASSWD: ALL,!/bin/su,!/bin/su - root,!/bin/su root,!/usr/bin/passwd root,!/usr/sbin/visudo,!/bin/vi /etc/sudoers,!/usr/bin/vim /etc/sudoers,!/usr/bin/sudo -i,/bin/vi /etc/ssh/*,!/usr/bin/vim /etc/ssh/*,!/bin/chmod 777 /etc/*,!/bin/chmod 777 *,!/bin/chmod 777,!/bin/chmod -R 777 *,!/bin/bash,!/bin/sh,!/bin/tcsh'
+
+  - name: Set root nologin   
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      state: present
+      regexp: '^
+      line: 'PermitRootLogin no'
+
+  - name: Set sshd DNS       
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      state: present
+      regexp: '^
+      line: 'UseDNS no'
+
+  - name: Stop firewalld     
+    service: name=firewalld state=stopped enabled=no
+  
+  - name: Shutdwon selinux.  
+    replace: dest=/etc/selinux/config regexp=^SELINUX=enforcing replace=SELINUX=disabled
+
+  - name: Stop postfix       
+    service: name=postfix state=stopped enabled=no
+
+  - name: Mkdir yumrepo direcrtory  
+    file: path=/etc/yum.repos.d/yumrepo.bak state=directory mode=0755
+
+  - name: Backup yum.repo  
+    shell: mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/yumrepo.bak/
+    
+
+  - name: Configure yum source   
+    get_url:
+      url: http://172.17.0.30/CentOS-YUM/Pub/YumRepoFile/CentOS7/CentOS7-Base.repo
+      dest: /etc/yum.repos.d/CentOS-Base.repo
+
+  - name: Install base rpm package   
+    yum: name={{ item }} state=latest
+    with_items:
+      - bash-completion-extras.noarch
+      - lrzsz
+      - nc
+      - vim
+      - iotop
+      - iftop
+      - dstat
+      - tcpdump
+      - ipmitool
+      - net-tools
+      - libselinux-python
+      - iptraf
+      - chrony
+
+  - name: Chrony conf   
+    shell: echo '' > /etc/chrony.conf
+
+  - name: Set chrony    
+    lineinfile: dest=/etc/chrony.conf line={{ item }}
+    with_items:
+      - 'server 10.8.6.11'
+      - 'stratumweight 0'
+      - 'driftfile /var/lib/chrony/drift'
+      - 'rtcsync'
+      - 'makestep 10 3'
+      - 'bindcmdaddress 127.0.0.1'
+      - 'bindcmdaddress ::1'
+      - 'keyfile /etc/chrony.keys'
+      - 'commandkey 1'
+      - 'generatecommandkey'
+      - 'noclientlog'
+      - 'logchange 0.5'
+      - 'logdir /var/log/chrony'
+	  
+  - name: Start chrony  
+    service: name=chronyd state=started enabled=yes
+    tags: chrony
+
+  - name: Change nofile limits.   
+    lineinfile: dest=/etc/security/limits.conf line={{ item }}
+    with_items:
+      - '* - nofile 165535'
+      - '* soft nofile 165535'
+      - '* hard nofile 165535'
+      - '* soft nproc 165535'
+      - '* hard nproc 165535'
+    tags: limits
+
+  - name: Rm localtime            
+    file: path=/etc/localtime state=absent
+
+  - name: Set timezone            
+    file: src=/usr/share/zoneinfo/Asia/Shanghai dest=/etc/localtime state=link
+
+  - name: Set LANG                
+    lineinfile: dest=/etc/locale.conf regexp=^LANG= line=LANG=en_US.UTF-8
+
+
+  - name: Mkdir ipv6 conf         
+    shell: echo '' > /etc/modprobe.d/ipv6.conf
+
+  - name: Set ipv6                
+    lineinfile: dest=/etc/modprobe.d/ipv6.conf line={{ item }}
+    with_items:
+      - 'alias net-pf-10 off'
+      - 'alias ipv6 off'
+    tags: ipv6
+
+  - name: Set histsize            
+    lineinfile:
+      dest: /etc/profile
+      regexp: '^HISTSIZE='
+      line: 'HISTSIZE=10000'
+
+  - name: Mkdir directory         
+    file: path=/var/log/.history state=directory mode="u=rwx,g=rwx,o=rwx"
+
+  - name: Copy histroy script     
+    copy: src=history.sh dest=/etc/profile.d/history.sh owner=root group=root mode="u=rw,g=r,o=r"
+ 
+  - name: Set timeout             
+    lineinfile:
+      dest: /etc/profile
+      line: 'export TMOUT=600'
+  - name: Soure profile
+    shell: source /etc/profile
+
+  - name: Disable ctrl+alt+del reboot    
+    file:
+      path: /usr/lib/systemd/system/ctrl-alt-del.target
+      state: absent
+
+  - name: Update sysctl          
+    lineinfile: dest=/etc/sysctl.conf line={{ item }}
+    with_items:
+      - 'net.ipv4.tcp_syncookies = 1'
+      - 'kernel.core_uses_pid=1'
+      - 'kernel.core_pattern=/tmp/core-%e-%p'
+      - 'fs.suid_dumpable=2'
+      - 'net.ipv4.tcp_tw_reuse=1'
+      - 'net.ipv4.tcp_tw_recycle=0'
+      - 'net.ipv4.tcp_timestamps=0'
+      - 'net.ipv4.ip_forward = 0'
+      - 'net.ipv4.conf.all.send_redirects = 0'
+      - 'net.ipv4.conf.default.send_redirects = 0'
+      - 'net.ipv4.tcp_max_syn_backlog = 1280'
+      - 'net.ipv4.icmp_echo_ignore_broadcasts = 1'
+      - 'net.ipv4.conf.all.accept_source_route = 0'
+      - 'net.ipv4.conf.all.accept_redirects = 0'
+      - 'net.ipv4.conf.all.secure_redirects = 0'
+      - 'net.ipv4.conf.all.log_martians = 1'
+      - 'net.ipv4.conf.default.accept_source_route = 0'
+      - 'net.ipv4.conf.default.accept_redirects = 0'
+      - 'net.ipv4.conf.default.secure_redirects = 0'
+      - 'net.ipv4.icmp_echo_ignore_broadcasts = 1'
+      - 'net.ipv4.icmp_ignore_bogus_error_responses = 1'
+      - 'net.ipv4.tcp_syncookies = 1'
+      - 'net.ipv4.conf.all.rp_filter = 1'
+      - 'net.ipv4.conf.default.rp_filter = 1'
+      - 'vm.max_map_count=655360'
+    tags: sysctl
+
+  - name: Restart sshd          
+    service: name=sshd state=restarted enabled=yes
