@@ -15,7 +15,11 @@
 
 Click the open in Cloud Shell button below to run a sample tutorial yourself.
 
+<<<<<<< HEAD
 <a href="https://shell.aliyun.com/?action=git_open&git_repo=https://github.com/Chwei-L/aliyun.git)&tutorial=notice.md" target="cloudshell_tutorial_cli_ansible">
+=======
+<a href="https://shell.aliyun.com/?action=git_open&git_repo=https://github.com/Chwei-L/aliyun.git&tutorial=notice.md" target="cloudshell_tutorial_cli_ansible">
+>>>>>>> 77b213d18afaf44f4aab529bf077c71d3cbb3854
   <img src="https://img.alicdn.com/tfs/TB1wt1zq9zqK1RjSZFpXXakSXXa-1066-166.png" width="180" />
 </a>
 
