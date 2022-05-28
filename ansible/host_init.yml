@@ -1,4 +1,9 @@
 ---
+- name: Host Init 
+  hosts: tag_created_from_cloudshell_tutorial_cli_ansible
+  remote_user: root
+
+  tasks:
   - name: Set 8 for minimum password length
     shell: authconfig --passminlen=8 --update
 
