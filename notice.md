@@ -27,7 +27,7 @@
 定位到 Ansible playbook 的目录。
 
 ```bash
-cd ~/tutorial-cli-ansible/ansible
+cd ~/aliyun/ansible
 ```
 
 一键配置好您编排的资源。
