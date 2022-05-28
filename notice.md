@@ -50,16 +50,16 @@ pip install footmark --upgrade
 ```
 
 ```bash
-wget -P ~/tutorial-cli-ansible/ansible/ https://raw.githubusercontent.com/alibaba/ansible-provider/master/contrib/inventory/alicloud.py;\
-chmod +x ~/tutorial-cli-ansible/ansible/alicloud.py
+wget -P ~/aliyun/ansible/ https://raw.githubusercontent.com/alibaba/ansible-provider/master/contrib/inventory/alicloud.py;\
+chmod +x ~/aliyun/ansible/alicloud.py
 ```
 
 ```bash
-ansible-playbook -i ~/tutorial-cli-ansible/ansible/alicloud.py ~/tutorial-cli-ansible/ansible/deploy.yml -u root -k
+ansible-playbook -i ~/aliyun/ansible/alicloud.py ~/tutorial-cli-ansible/ansible/deploy.yml -u root -k
 ```
 
 ## 销毁资源
 
 ```bash
-ansible-playbook ~/tutorial-cli-ansible/ansible/destory.yml
+ansible-playbook ~/aliyun/ansible/destory.yml
 ```
