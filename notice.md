@@ -1,7 +1,7 @@
 ## 须知
 - ECS
-    - 操作系统：CentOS:7.6
-    - 实例规格：ecs.t5-lc2m1.nano
+    - 操作系统：CentOS:7.7
+    - 实例规格：ecs.n4.small
     - 实例数量：1
     - 系统盘：20G 高效云盘
 

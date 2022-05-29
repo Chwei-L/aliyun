@@ -3,7 +3,7 @@
 
 •Provision a new VPC and any networking related configurations.
 
-•Install the centos7 system in the instance.
+•Install the centos7.7 system in the instance.
 
 •Apply any security hardening (OS, firewall, etc..) for the VM instance.
 
