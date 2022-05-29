@@ -1,24 +1,23 @@
-- name: Deploy
-  hosts: alicloud 
+---
+- hosts: alicloud 
   remote_user: root
+  gather_facts: no
 
   tasks:
-
-  - name: remove old docker
-    yum:
-      name: docker,docker-common,docker-selinux,docker-engine
-      state: removed
-  - name: download docker repo
-    shell: yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-  - name: Install docker by yum 
-    yum:
-      name: docker-ce
-      state: present
-  - name: startup docker
-    service:
-      name: docker
-      state: started
-      enabled: yes
-  task:
+    - name: remove old docker
+      yum:
+        name: docker,docker-common,docker-selinux,docker-engine
+        state: removed
+    - name: download docker repo
+      shell: yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+    - name: Install docker-ce by yum 
+      yum:
+        name: docker-ce
+        state: present
+    - name: startup docker
+      service:
+        name: dockerd
+        state: started
+        enabled: yes
     - name: running nginx with docker
-      shell: docker run -itd --name nginx --net=host nginx:latest
+      shell: docker run -itd --name nginx -p 80:80 nginx:latest
