@@ -1,6 +1,6 @@
 # common parameters
 alicloud_region: "cn-shenzhen"
-alicloud_zone: "ranndom"
+alicloud_zone: "random"
 
 # create vpc parameters
 vpc_cidr: "172.16.0.0/12"
@@ -38,7 +38,7 @@ allocate_public_ip: True
 internet_charge_type: "PayByTraffic"
 max_bandwidth_in: 200
 max_bandwidth_out: 50
-instance_tags: {created_from: cloudshell-tutorial-cli-ansible}
+instance_tags: {SRE}
 
 system_disk_category: "cloud_ssd"
 system_disk_size: 20
