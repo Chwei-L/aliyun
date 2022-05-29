@@ -1,5 +1,5 @@
 - name: Deploy
-  hosts: tag_created_from_cloudshell_tutorial_cli_ansible
+  hosts: alicloud 
   remote_user: root
 
   tasks:

@@ -15,13 +15,9 @@
 - 安全组：<tutorial-editor-open-file filePath="tutorial-cli-ansible/ansible/roles/security_group/tasks/main.yml">roles/security_group/tasks/main.yml</tutorial-editor-open-file>
 - ECS：<tutorial-editor-open-file filePath="tutorial-cli-ansible/ansible/roles/ecs/tasks/main.yml">roles/ecs/tasks/main.yml</tutorial-editor-open-file>
 
-定位到 Ansible playbook 的目录：
-```bash
-cd ~/aliyun/ansible
-```
 编排资源：
 ```bash
-ansible-playbook create.yml
+cd ~/aliyun/ansible;ansible-playbook create.yml
 ```
 执行完后，在对应产品的控制台看到创建的 ECS
 
@@ -40,14 +36,13 @@ cloudshell-git-open https://github.com/Chwei-L/Linux.git /home/shell/Linux
 ```
 编排资源：
 ```bash
-cd ~/aliyun/ansible;\
-ansible-playbook -i alicloud.py ~/Linux/Basealicloud config.yml -u root -k
+cd ~/Linux/BaseSecurity;ansible-playbook -i ~/aliyun/ansible/alicloud.py config.yml -u root -k
 ```
 
 
 ## Nginx应用部署 
 ```bash
-ansible-playbook -i alicloud.py ~/aliyun/ansible/deploy.yml -u root -k
+ansible-playbook -i ~/aliyun/ansible/alicloud.py ~/aliyun/ansible/deploy.yml -u root -k
 ```
 
 
