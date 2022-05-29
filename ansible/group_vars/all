@@ -1,6 +1,6 @@
 # common parameters
 alicloud_region: "cn-shenzhen"
-alicloud_zone: "random"
+alicloud_zone: "cn-shenzhen-a"
 
 # create vpc parameters
 vpc_cidr: "172.16.0.0/12"
