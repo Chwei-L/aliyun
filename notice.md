@@ -18,7 +18,6 @@
 定位到 Ansible playbook 的目录：
 ```bash
 cd ~/aliyun/ansible
-
 ```
 
 编排资源：
@@ -31,16 +30,13 @@ ansible-playbook create.yml
 ## 主机始化化基线安全配置
 ```bash
 pip install ansible_alicloud_module_utils
-
 ```
 ```bash
 pip install footmark --upgrade
-
 ```
 ```bash
 wget -P ~/aliyun/ansible/ https://raw.githubusercontent.com/alibaba/ansible-provider/master/contrib/inventory/alicloud.py;\
 chmod +x ~/aliyun/ansible/alicloud.py
-
 ```
 ```bash
 ansible-playbook ~/aliyun/ansible/host_init.yml
