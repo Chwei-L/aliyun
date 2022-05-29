@@ -38,19 +38,16 @@ wget -P ~/aliyun/ansible/ https://raw.githubusercontent.com/alibaba/ansible-prov
 ```bash
 cloudshell-git-open https://github.com/Chwei-L/Linux.git /home/shell/Linux
 ```
-定位到安全整改 playbook 的目录：
-```bash
-cd ~/aliyun/Linux/BaseSecurity
-```
 编排资源：
 ```bash
-ansible-playbook -i ~/aliyun/ansible/alicloud.py alicloud config.yml -u root -k
+cd ~/aliyun/ansible;\
+ansible-playbook -i alicloud.py ~/Linux/Basealicloud config.yml -u root -k
 ```
 
 
 ## Nginx应用部署 
 ```bash
-ansible-playbook -i ~/aliyun/ansible/alicloud.py ~/tutorial-cli-ansible/ansible/deploy.yml -u root -k
+ansible-playbook -i alicloud.py ~/aliyun/ansible/deploy.yml -u root -k
 ```
 
 
