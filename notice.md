@@ -36,7 +36,7 @@ wget -P ~/aliyun/ansible/ https://raw.githubusercontent.com/alibaba/ansible-prov
 ```
 获取安全整改 playbook
 ```bash
-git clone https://github.com/Chwei-L/Linux.git /home/shell/
+cloudshell-git-open https://github.com/Chwei-L/Linux.git /home/shell/Linux
 ```
 定位到安全整改 playbook 的目录：
 ```bash
