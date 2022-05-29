@@ -38,7 +38,7 @@ allocate_public_ip: True
 internet_charge_type: "PayByTraffic"
 max_bandwidth_in: 200
 max_bandwidth_out: 50
-instance_tags: {SRE}
+instance_tags: {SER: test}
 
 system_disk_category: "cloud_efficiency"
 system_disk_size: 20
