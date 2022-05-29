@@ -24,7 +24,7 @@ cd ~/aliyun/ansible
 ```bash
 ansible-playbook create.yml
 ```
-执行完后，在对应产品的控制台看到创建的 ECS：
+执行完后，在对应产品的控制台看到创建的 ECS
 
 
 ## 主机始化化基线安全配置
