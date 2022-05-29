@@ -27,12 +27,8 @@ ansible-playbook create.yml
 
 
 ## 主机始化化基线安全配置
-<<<<<<< HEAD
-获取Invectory
-=======
 
-### inventory环境安装
->>>>>>> e1aa236333899caf2791182c5d42a05ab3857dde
+获取 Invectory
 ```bash
 wget -P ~/aliyun/ansible/ https://raw.githubusercontent.com/alibaba/ansible-provider/master/contrib/inventory/alicloud.py;\
 chmod +x ~/aliyun/ansible/alicloud.py;\
@@ -42,26 +38,13 @@ wget -P ~/aliyun/ansible/ https://raw.githubusercontent.com/alibaba/ansible-prov
 ```bash
 cloudshell-git-open https://github.com/Chwei-L/Linux.git
 ```
-定位到 安全整改 playbook 的目录：
-```bash
-cd ~/aliyun/Linux/BaseSecurity
-```
-
-### 基线安全加固
-```bash
-cloudshell-git-open https://github.com/Chwei-L/Linux.git
-```
-定位到 Ansible playbook 的目录：
+定位到安全整改 playbook 的目录：
 ```bash
 cd ~/aliyun/Linux/BaseSecurity
 ```
 编排资源：
 ```bash
-<<<<<<< HEAD
 ansible-playbook -i ~/aliyun/ansible/alicloud.py alicloud config.yml -u root -k
-=======
-ansible-palybook config.yml
->>>>>>> e1aa236333899caf2791182c5d42a05ab3857dde
 ```
 
 
