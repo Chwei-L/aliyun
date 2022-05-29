@@ -40,7 +40,7 @@ max_bandwidth_in: 200
 max_bandwidth_out: 50
 instance_tags: {SRE}
 
-system_disk_category: "cloud_ssd"
+system_disk_category: "cloud_efficiency"
 system_disk_size: 20
 
 number_of_instances: 1
