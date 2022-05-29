@@ -28,18 +28,22 @@ ansible-playbook create.yml
 
 
 ## 主机始化化基线安全配置
-```bash
-pip install ansible_alicloud_module_utils
-```
-```bash
-pip install footmark --upgrade
-```
+获取Invectory
 ```bash
 wget -P ~/aliyun/ansible/ https://raw.githubusercontent.com/alibaba/ansible-provider/master/contrib/inventory/alicloud.py;\
-chmod +x ~/aliyun/ansible/alicloud.py
+chmod +x ~/aliyun/ansible/alicloud.py;\
+wget -P ~/aliyun/ansible/ https://raw.githubusercontent.com/alibaba/ansible-provider/master/contrib/inventory/alicloud.ini
+```
+获取安全整改 playbook
+```bash
+cloudshell-git-open https://github.com/Chwei-L/Linux.git
+```
+定位到 安全整改 playbook 的目录：
+```bash
+cd ~/aliyun/Linux/BaseSecurity
 ```
 ```bash
-ansible-playbook ~/aliyun/ansible/host_init.yml
+ansible-playbook -i ~/aliyun/ansible/alicloud.py alicloud config.yml -u root -k
 ```
 
 
