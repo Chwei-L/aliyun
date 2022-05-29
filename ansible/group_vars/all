@@ -28,7 +28,7 @@ group_inboundRules:
 
 # create ECS instance parameters
 image_id: "centos_7_7_x64_20G_alibase_20211130.vhd"
-instance_type: "ecs.n4.small"
+instance_type: "ecs.s6-c1m1.small"
 instance_name: "aliyun-ansible"
 instance_description: "Create a new ECS instance resource via Ansible example."
 host_name: "my-instance-from-ansible"
