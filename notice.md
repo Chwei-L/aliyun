@@ -51,6 +51,7 @@ cd ~/aliyun/Linux/BaseSecurity
 编排资源：
 ```bash
 ansible-palybook config.yml
+```
 
 
 ## Nginx应用部署 
